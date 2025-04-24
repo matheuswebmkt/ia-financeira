@@ -1,81 +1,102 @@
+// app/layout.tsx
+
+// Imports existentes...
 import { MainNav } from "@/components/main-nav";
-// import { MobileNav } from "@/components/mobile-nav";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
-import { fontSans } from "@/lib/fonts";
-import Link from "@/node_modules/next/link";
+import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/toggle";
-// import HeroPage from "./hero/page";
-import { SiteFooter } from "@/components/site-footer";
-// import PricingPage from "@/app/pricing/page";
+// import { SiteFooter } from "@/components/site-footer"; // REMOVER DAQUI SE ESTIVER NO MarketingLayout
 import MobileNav from "@/components/mobile-nav";
 import { Toaster } from "@/components/ui/toaster";
-import { getCurrentUser } from "@/lib/session";
-import { getAuthSession } from "@/lib/auth";
+import Script from 'next/script';
+import MetaPixelEvents from '@/components/MetaPixelEvents';
 
-const inter = Inter({ subsets: ["latin"] });
+// Font e Metadata existentes...
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: "Quote AI",
-  description: "Generate Daily Quotes",
+  title: "IA Financeira",
+  description: "Inteligência financeira",
+  icons: {
+    icon: "/icon_ia_financeira_preto.svg",
+  },
+  other: {
+    'facebook-domain-verification': 'fkhjt7wou7n6glo7ssdmgmyo4p2zr1',
+  },
 };
 
+
 export default function RootLayout({
-  children,
+  children, // Recebe children
 }: {
   children: React.ReactNode;
 }) {
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt-BR" className={cn(fontSans.variable)} suppressHydrationWarning>
+      <head>
+          {/* Scripts que precisam estar no head podem ir aqui se necessário */}
+          {/* O script base do Pixel geralmente vai no body, como você fez */}
+      </head>
       <body
         className={cn(
-          "relative flex min-h-screen w-full flex-col justify-center scroll-smooth bg-background font-sans antialiased",
+          // Mantenha suas classes do body
+          "min-h-screen bg-background font-sans antialiased"
         )}
       >
+        {/* Providers devem envolver os children */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="dark" // Ou "system" se preferir
           enableSystem
           disableTransitionOnChange
         >
-          {/* <div className="flex min-h-screen flex-col">
-            <header className="h-16 container sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="flex h-16 items-center justify-between py-6 w-full">
-              <MobileNav />
-                <MainNav />
-                <nav>
-                  <div className="md:flex">
-                    <div className="flex gap-4">
-                      <ModeToggle />
-                      <Link
-                        href="/login"
-                        className={cn(
-                          buttonVariants({ variant: "secondary", size: "sm" }),
-                          "px-4"
-                        )}
-                      >
-                        Get Started
-                      </Link>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-            </header> */}
-          {/* <HeroPage /> */}
+          {/* Conteúdo Principal da Aplicação */}
+          {children}
 
-          <main className="flex-1">{children}</main>
-          <Analytics />
-          <SpeedInsights />
-          {/* </div>
-           
-          <SiteFooter /> */}
+          {/* Componentes Globais como Toaster */}
           <Toaster />
+
+          {/* Scripts e Ferramentas de Análise */}
+          <SpeedInsights />
+          <Analytics />
+          <MetaPixelEvents />
+          {pixelId && (
+            <Script
+              id="fb-pixel-base"
+              strategy="afterInteractive" // Boa estratégia para o pixel
+              dangerouslySetInnerHTML={{
+                __html: `
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '${pixelId}');
+                  fbq('track', 'PageView');
+                `,
+              }}
+            />
+          )}
+
+          {/* REMOVA O SiteFooter daqui se ele já está sendo renderizado no MarketingLayout */}
+          {/* <SiteFooter /> */}
+
         </ThemeProvider>
       </body>
     </html>

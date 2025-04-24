@@ -133,3 +133,131 @@
     
   }
 }
+
+
+
+@layer utilities {
+  @keyframes lightSweep {
+    0% {
+      /* Começa bem fora da tela à esquerda, garantindo margem para skew */
+      transform: translateX(-150%) skewX(-15deg);
+    }
+    100% {
+      /* Termina bem fora da tela à direita, garantindo margem para skew */
+      transform: translateX(250%) skewX(-15deg);
+    }
+  }
+
+  .light-sweep::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%; /* Largura do brilho */
+    height: 100%;
+    /* Gradiente base */
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 50%,
+      transparent 100%
+    );
+    /* Gradiente para dark mode */
+    @apply dark:bg-gradient-to-r dark:from-transparent dark:via-white/15 dark:to-transparent;
+
+    /* Animação com range expandido e sem delay inicial */
+    /* Ajuste a duração (ex: 4s, 5s) conforme a velocidade desejada */
+    animation: lightSweep 5s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+
+    /* O transform inicial não é necessário aqui, pois 0% do keyframe define */
+  }
+
+  /* Lembrete: O elemento com .light-sweep DEVE ter estas propriedades */
+  /* .light-sweep { */
+  /*   position: relative; */
+  /*   overflow: hidden; */
+  /* } */
+}
+
+/* Em seu arquivo CSS global (ex: src/app/globals.css) */
+
+/* Base para elementos que animam na entrada */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: var(--animation-delay, 0s); /* Variável para stagger */
+}
+
+/* Estado visível */
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Efeitos de hover (exemplo para os cards de dor) */
+.pain-point-card {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Adicionar transition aqui */
+    /* ... outros estilos do card */
+}
+
+.pain-point-card:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Exemplo de sombra no hover */
+}
+
+.pain-point-card .icon-text-wrapper {
+    transition: transform 0.2s ease-out;
+}
+
+.pain-point-card:hover .icon-text-wrapper {
+    transform: translateY(-1px); /* Pequeno ajuste no hover do ícone/texto */
+}
+
+/* Adicione classes para os elementos específicos se precisar de seletores mais precisos */
+
+
+
+
+/* Hover para os Pillar Cards (Zap, Target, Brain) */
+.pillar-card {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+  /* ... outros estilos do card content ... */
+}
+
+.pillar-card:hover {
+  transform: scale(1.03) translateY(-1px); /* Efeito de hover do original */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  /* background-color: hsl(var(--muted)/0.5); */ /* Ajuste conforme seu tema */
+}
+.dark .pillar-card:hover {
+    /* background-color: hsl(var(--input)); */ /* Ajuste a cor do hover dark */
+     background-color: rgb(39 39 42 / 0.8); /* Ex: zinc-800 */
+}
+
+/* Hover da imagem no ShineBorder (já está no CSS anterior, mas garantindo) */
+.image-shine-border .image-inside {
+    transition: transform 0.7s ease-out; /* Duração do original */
+}
+.image-shine-border:hover .image-inside {
+    transform: scale(1.05);
+}
+
+
+
+
+
+/* Shinybutton semelhante apenas com css */
+
+/* Em src/app/globals.css */
+:root {
+  /* !!! ESSENCIAL: Defina sua cor primária aqui em HSL !!! */
+  --primary: 74 87% 53%; /* Exemplo Roxo - AJUSTE CONFORME NECESSÁRIO */
+}
+
+
+
+
+
