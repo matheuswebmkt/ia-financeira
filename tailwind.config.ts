@@ -1,5 +1,9 @@
+// tailwind.config.ts
+
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
+// Importa as fontes padrão do Tailwind
+import { fontFamily } from "tailwindcss/defaultTheme"; 
 
 export default {
   darkMode: ["class"],
@@ -9,7 +13,26 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
+    // theme sem extend: Se você precisar de configurações básicas aqui, mantenha.
+    // Geralmente, configurações como 'container' ficam aqui se você NÃO quer herdar do padrão.
+    // Exemplo (se você customiza o container):
+    container: { 
+      center: true,
+      padding: "2rem", // Ajuste o padding padrão do container se necessário
+      screens: {
+        "2xl": "1400px", // Ajuste o breakpoint máximo do container se necessário
+      },
+    },
+    extend: { // Configurações que ADICIONAM ou MODIFICAM o tema padrão
+      // --- CORREÇÃO DA FONTE APLICADA AQUI ---
+      fontFamily: {
+        // Define 'sans' para usar a variável CSS --font-sans (da fonte Inter)
+        // e inclui as fontes padrão do Tailwind como fallback
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        // Você pode adicionar outras famílias aqui se precisar, ex:
+        // serif: ["var(--font-serif)", ...fontFamily.serif], 
+      },
+      // --- FIM DA CORREÇÃO DA FONTE ---
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -63,26 +86,22 @@ export default {
       animation: {
         marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        // Adicione outras animações aqui se necessário
+        // Ex: "shine-pulse": "shine-pulse var(--shine-pulse-duration) infinite linear",
       },
       keyframes: {
         marquee: {
-          from: {
-            transform: "translateX(0)",
-          },
-          to: {
-            transform: "translateX(calc(-100% - var(--gap)))",
-          },
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
         },
         "marquee-vertical": {
-          from: {
-            transform: "translateY(0)",
-          },
-          to: {
-            transform: "translateY(calc(-100% - var(--gap)))",
-          },
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
         },
+         // Adicione outros keyframes aqui se necessário
+         // Ex: 'shine-pulse': { /* ... keyframes do shine-pulse ... */ },
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate], // Mantém o plugin tailwindcss-animate
 } satisfies Config;
