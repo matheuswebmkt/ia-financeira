@@ -1,40 +1,33 @@
 'use client';
 
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+// Imports necessários mantidos
+import React, { Suspense } from 'react'; // REMOVIDO: useEffect, useRef, useState
 import TrackPurchase from '@/components/TrackPurchase';
 import { CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // << IMPORTANTE: Usaremos este!
+// import { cn } from "@/lib/utils"; // REMOVIDO: cn não é mais usado aqui
+import AnimateOnScroll from '@/components/utils/AnimateOnScroll';
+// Import de SparklesText removido se não for usado no título (não estava no JSX anterior)
+// import { SparklesText } from "@/components/magicui/sparkles-text"; 
 
-// REMOVIDO: Hook useIntersectionObserver daqui
-
-// REMOVIDO: Declaração global do fbq daqui (deve estar em um arquivo de tipos global ou gerenciado pelo MetaPixelEvents/Pixel Lib)
-// Se precisar MUITO dela aqui, pode manter, mas idealmente não é o melhor lugar.
-
-// --- Dados ESTÁTICOS do produto (Mantidos) ---
+// --- Dados ESTÁTICOS do produto ---
 const purchasedProductInfo = {
   content_ids: ['IA_ANTI_DIVIDAS_EBOOK_01'],
   content_name: 'eBook IA Anti-Dívidas + Bônus',
   content_type: 'product',
   num_items: 1,
-  // Adicione value e currency se TrackPurchase precisar deles
-  // value: 9.90,
-  // currency: 'BRL',
 };
 
-// --- Componente Wrapper (Mantido) ---
-// Suspense é importante aqui caso TrackPurchase faça algo assíncrono
+// --- Componente Wrapper ---
 function PurchaseTracker() {
   return (
-    <Suspense fallback={<div>Rastreando compra...</div>}> {/* Adiciona um fallback para o Suspense */}
+    <Suspense fallback={<div>Rastreando compra...</div>}>
       <TrackPurchase productData={purchasedProductInfo} />
     </Suspense>
   );
 }
 
-// --- Componente Principal Otimizado (usando AnimateOnScroll) ---
+// --- Componente Principal Otimizado ---
 export default function ThankYouPage() {
-  // REMOVIDO: Lógica de animação com observer/state/calculateDelay
 
   return (
     <section
@@ -49,43 +42,36 @@ export default function ThankYouPage() {
        </div>
 
       {/* Container principal */}
-      {/* z-[2] Mantido, ref removido */}
       <div className="container relative z-[2] px-5">
          {/* Wrapper Centralizado */}
         <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
 
-            {/* Tracker - Renderiza imediatamente */}
             <PurchaseTracker />
 
-            {/* Ícone (Animado com AnimateOnScroll) */}
-             <AnimateOnScroll delay={0.1} className="mb-[-1rem]"> {/* Delay pequeno */}
+            <AnimateOnScroll delay={0.1} className="mb-[-1rem]">
                 <div className="inline-block rounded-full border border-green-200 bg-green-100 p-2 shadow-md dark:border-green-700 dark:bg-green-900">
-                    <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-500" />
+                    <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-500" aria-hidden="true" />
                 </div>
              </AnimateOnScroll>
 
-            {/* Título Principal (Animado) */}
             <AnimateOnScroll delay={0.2}>
+                {/* Removido SparklesText se não estava sendo usado */}
                 <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
                     Compra Confirmada!🎉
                 </h2>
             </AnimateOnScroll>
 
-            {/* Parágrafo de Confirmação (Animado) */}
             <AnimateOnScroll delay={0.3}>
                 <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
                     Obrigado por adquirir o <span className="font-semibold text-foreground">{purchasedProductInfo.content_name}</span>! Seu acesso está a caminho.
                 </p>
             </AnimateOnScroll>
 
-            {/* Parágrafo de Instrução (Animado) */}
             <AnimateOnScroll delay={0.4}>
                 <p className="text-base leading-relaxed text-muted-foreground">
                     Enviamos um e-mail com todos os detalhes para você começar. Por favor, verifique sua caixa de entrada (e a pasta de spam, por via das dúvidas 😉).
                 </p>
             </AnimateOnScroll>
-
-             {/* Opcional: Link/Botão sutil (Removido) */}
 
         </div>
       </div>
