@@ -1,24 +1,15 @@
-"use client"; // <= NECESSÁRIO porque usa o componente Accordion da Shadcn/UI
+"use client"; // NECESSÁRIO porque usa useState
 
-import React from "react"; // Não precisa mais de hooks de animação (useEffect, useRef, useState)
+import React, { useState } from "react"; // Importa useState
 import { cn } from "@/lib/utils";
-// import { HelpCircle, LucideIcon } from "lucide-react"; // Removido se não usado
-// Componentes do Accordion Shadcn UI Mantidos
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // Importa wrapper de animação
-
-// REMOVIDO: Hook useIntersectionObserver daqui
+import { ChevronDown } from "lucide-react"; // Ícone para indicar aberto/fechado
 
 // --- Tipagem e Dados (Mantidos) ---
 interface FaqItem {
     question: string;
     answer: string;
 }
+
 const faqItems: FaqItem[] = [
   { question: "Como receberei o material?", answer: "Imediatamente após a confirmação da compra, você recebe um e-mail com o link para acessar todo o material do Método IA Anti-Dívidas e os bônus. Simples, rápido e direto." },
   { question: "Eu preciso pagar por alguma ferramenta de IA pra usar o método?", answer: "Não! O método foi desenhado para usar ferramentas de Inteligência Artificial amplamente disponíveis e gratuitas. Você não terá nenhum custo adicional com ferramentas para aplicar o que aprender." },
@@ -31,17 +22,24 @@ const faqItems: FaqItem[] = [
   { question: "Por que é tão barato?", answer: "Nosso objetivo é democratizar o acesso à inteligência financeira estratégica usando a IA. Queremos que o máximo de pessoas possa sair do ciclo de dívidas. O preço baixo é para remover qualquer barreira e garantir que esta solução poderosa seja acessível a quem mais precisa." },
 ];
 
-// --- Componente Refatorado (Client Component devido ao Accordion) ---
+// --- Componente FAQ com Accordion Customizado ---
 export default function FaqSection() {
-    // REMOVIDO: Logica de state/ref/effect de animação
-    // REMOVIDO: calculateDelay
+    // Estado para controlar qual item está aberto. null = nenhum aberto.
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+    // Função para alternar o estado de um item
+    const handleToggle = (index: number) => {
+        // Se o item clicado já está aberto, fecha ele (seta para null)
+        // Se outro item está aberto ou nenhum está aberto, abre o item clicado (seta para o index)
+        setOpenIndex(openIndex === index ? null : index);
+    };
 
     return (
         <section
-            id="faq" // Manter ID
+            id="faq"
             className="relative w-full overflow-hidden bg-background py-16 md:py-20 lg:py-24"
         >
-            {/* Background */}
+            {/* Background (Mantido) */}
             <div className="absolute inset-0 z-[-1] opacity-5 dark:opacity-[0.04]">
                 <div className="pointer-events-none absolute top-10 left-10 h-1/3 w-1/3 transform-gpu rounded-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.3),_transparent_70%)] blur-3xl" />
                 <div className="pointer-events-none absolute bottom-10 right-10 h-1/3 w-1/3 transform-gpu rounded-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent)/0.4),_transparent_80%)] blur-3xl" />
@@ -50,39 +48,61 @@ export default function FaqSection() {
             {/* Container principal */}
             <div className="container space-y-10 px-5 md:space-y-12">
 
-                {/* 1. Bloco Título */}
+                {/* 1. Bloco Título (Removido AnimateOnScroll) */}
                 <div className="mx-auto flex max-w-2xl flex-col items-center space-y-3 text-center">
-                    <AnimateOnScroll delay={0}>
-                        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                            Perguntas Frequentes
-                        </h2>
-                    </AnimateOnScroll>
-                    <AnimateOnScroll delay={0.1}>
-                        <p className="max-w-xl leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                            Respostas para as dúvidas mais comuns – para você tomar a decisão com 100% de clareza.
-                        </p>
-                    </AnimateOnScroll>
+                    <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+                        Perguntas Frequentes
+                    </h2>
+                    <p className="max-w-xl leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        Respostas para as dúvidas mais comuns – para você tomar a decisão com 100% de clareza.
+                    </p>
                 </div>
 
-                {/* 2. Bloco do Accordion */}
-                {/* Envolve o Accordion inteiro com AnimateOnScroll */}
-                <AnimateOnScroll delay={0.2} className="mx-auto w-full max-w-3xl">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqItems.map((item, index) => (
-                            // NÃO anima os itens internos para não quebrar o Accordion
-                            <AccordionItem key={item.question} value={`item-${index + 1}`}>
-                                <AccordionTrigger className="text-left text-base hover:no-underline sm:text-lg">
-                                    {item.question}
-                                </AccordionTrigger>
-                                <AccordionContent className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-                                    {item.answer}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </AnimateOnScroll>
+                {/* 2. Bloco do Accordion Customizado (Removido AnimateOnScroll) */}
+                <div className="mx-auto w-full max-w-3xl">
+                    {faqItems.map((item, index) => {
+                        const isOpen = openIndex === index; // Verifica se este item é o que está aberto
 
-                {/* 3. CTA Final Opcional (Removido) */}
+                        return (
+                            <div key={item.question} className="border-b border-border/20">
+                                {/* Trigger (Botão da Pergunta) */}
+                                <button
+                                    type="button" // Boa prática para botões sem submit
+                                    onClick={() => handleToggle(index)}
+                                    className="flex w-full items-center justify-between py-5 text-left text-base font-medium text-foreground hover:no-underline sm:text-lg"
+                                    aria-expanded={isOpen} // Acessibilidade: indica se está expandido
+                                    aria-controls={`faq-content-${index}`} // Acessibilidade: liga ao conteúdo
+                                    id={`faq-trigger-${index}`} // Acessibilidade: ID para o labelby do conteúdo
+                                >
+                                    <span>{item.question}</span>
+                                    <ChevronDown
+                                        className={cn(
+                                            "h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform duration-200",
+                                            isOpen && "rotate-180" // Gira o ícone quando aberto
+                                        )}
+                                    />
+                                </button>
+
+                                {/* Content (Resposta) - Animação com max-height */}
+                                <div
+                                    id={`faq-content-${index}`} // Acessibilidade: ID para o controls do botão
+                                    role="region" // Acessibilidade: define a região do conteúdo
+                                    aria-labelledby={`faq-trigger-${index}`} // Acessibilidade: liga ao botão
+                                    className={cn(
+                                        "overflow-hidden transition-[max-height] duration-300 ease-in-out",
+                                        isOpen ? "max-h-[500px]" : "max-h-0" // Controla a altura para animação
+                                        // '[500px]' é um valor arbitrário, ajuste se necessário para respostas muito longas
+                                    )}
+                                >
+                                    {/* Adiciona padding apenas quando está aberto (dentro do div que colapsa) */}
+                                    <div className="pb-5 pt-1 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                                        {item.answer}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
 
             </div> {/* Fim do container principal */}
         </section>
