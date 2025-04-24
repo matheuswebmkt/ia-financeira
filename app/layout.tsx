@@ -14,7 +14,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/toggle";
 // import { SiteFooter } from "@/components/site-footer"; // REMOVER DAQUI SE ESTIVER NO MarketingLayout
 import MobileNav from "@/components/mobile-nav";
-import { Toaster } from "@/components/ui/toaster";
 import Script from 'next/script';
 import MetaPixelEvents from '@/components/MetaPixelEvents';
 
@@ -66,8 +65,7 @@ export default function RootLayout({
           {/* Conteúdo Principal da Aplicação */}
           {children}
 
-          {/* Componentes Globais como Toaster */}
-          <Toaster />
+          
 
           {/* Scripts e Ferramentas de Análise */}
           <SpeedInsights />
