@@ -81,7 +81,6 @@ const PurchaseNotification: React.FC = () => {
         clearTimeout(cleanupTimeoutRef.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Roda apenas uma vez na montagem
 
   return (

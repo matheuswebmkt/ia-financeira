@@ -106,7 +106,6 @@ const TrackPurchase: React.FC<TrackPurchaseProps> = ({ productData }) => {
     sendCapiEvent('Purchase', eventData, currentUrl);
 
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, productData]);
 
   return null;

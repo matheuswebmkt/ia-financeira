@@ -36,7 +36,6 @@ function useIntersectionObserver(options: IntersectionObserverInit = {}): [RefOb
       }
     };
   // Dependências explícitas
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.root, options.rootMargin, options.threshold, isIntersecting]); // Adiciona isIntersecting aqui para evitar re-checar se já é true
 
   // Retorna a ref (que pode ser null) e o estado

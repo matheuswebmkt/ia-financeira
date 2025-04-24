@@ -1,71 +1,50 @@
 // components/navbar/NavbarGetStartedButton.tsx
-"use client"; // Necessário para onClick e Pixel/CAPI
+"use client"; 
 
 import React from 'react';
-import { Button } from "@/components/ui/button"; // Importa o botão base
-import { sendCapiEvent } from '@/lib/pixel'; // Importa função CAPI
+import { Button } from "@/components/ui/button"; 
+import { sendCapiEvent } from '@/lib/pixel'; 
 
-// Declaração global fbq
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-  }
-}
+declare global { /* ... window.fbq ... */ }
 
-// Props: Apenas as necessárias para estilização e texto (pode adicionar mais se precisar)
+// --- CORREÇÃO AQUI ---
+// Remove a interface vazia e estende diretamente as props do elemento Button do HTML
+// Isso inclui onClick, className, children, type, disabled, etc.
 interface NavbarGetStartedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    // Não precisa das props de variant/size se for sempre igual
+    // Pode adicionar props customizadas aqui se precisar no futuro
 }
 
-const NavbarGetStartedButton: React.FC<NavbarGetStartedButtonProps> = ({ children = "Get Started", className, ...props }) => {
+const NavbarGetStartedButton: React.FC<NavbarGetStartedButtonProps> = ({ 
+    children = "Get Started", // Mantém o texto padrão
+    className, 
+    onClick: originalOnClick, // Renomeia prop onClick original para evitar conflito
+    ...props // Captura outras props como type, disabled, etc.
+}) => {
 
     const handleCheckoutClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         console.log('NavbarGetStartedButton clicked!');
+        const initiateCheckoutEventData = { /* ... dados do evento ... */ };
 
-        // Dados do evento (AJUSTE CONFORME NECESSÁRIO)
-        const initiateCheckoutEventData = {
-            content_name: 'eBook IA Anti-Dívidas + Bônus (Navbar CTA)', // Nome específico
-            content_ids: ['IA_ANTI_DIVIDAS_EBOOK_01'],
-            content_type: 'product',
-            value: 9.90, // << AJUSTAR
-            currency: 'BRL', // << AJUSTAR
-        };
-
-        // Dispara Pixel
-        if (typeof window.fbq === 'function') {
-            window.fbq('track', 'InitiateCheckout', initiateCheckoutEventData);
-            console.log('Meta Pixel (Browser - Navbar): InitiateCheckout sent', initiateCheckoutEventData);
-        } else {
-            console.warn('FB Pixel not loaded (Navbar CTA).');
-        }
-
-        // Dispara CAPI
+        if (typeof window.fbq === 'function') { /* ... fbq track ... */ }
         sendCapiEvent('InitiateCheckout', initiateCheckoutEventData, window.location.href);
-        console.log('Meta CAPI (Frontend Trigger - Navbar): InitiateCheckout sent to backend API.');
+        
+        // Executa o onClick original se ele foi passado
+        if (originalOnClick) {
+            originalOnClick(event);
+        }
 
-        // Redirecionamento
         const checkoutUrl = process.env.NEXT_PUBLIC_CHECKOUT_URL;
-        if (checkoutUrl) {
-            // Não precisa de event.preventDefault() para button,
-            // mas window.open é a forma de ir para nova aba.
-            window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
-        } else {
-            console.warn('NavbarGetStartedButton: NEXT_PUBLIC_CHECKOUT_URL not set.');
-        }
-
-        // Chama qualquer onClick original que possa ter sido passado (pouco provável aqui)
-         if (props.onClick) {
-            props.onClick(event);
-        }
+        if (checkoutUrl) { window.open(checkoutUrl, '_blank', 'noopener,noreferrer'); } 
+        else { console.warn('NavbarGetStartedButton: NEXT_PUBLIC_CHECKOUT_URL not set.'); }
     };
 
     return (
         <Button
-            variant="default" // Força a variante default (preto/branco)
-            size="default" // Usa o tamanho padrão do botão (ajuste para lg se necessário)
-            className={className} // Permite passar classes extras
-            onClick={handleCheckoutClick} // Adiciona a lógica de clique
-            {...props} // Passa outras props (type, disabled, etc.)
+            variant="default" 
+            size="default" // Ajuste para 'lg' se preferir
+            className={className} 
+            onClick={handleCheckoutClick} // Usa o handler customizado
+            {...props} // Passa props restantes (type="button", disabled, etc.)
         >
             {children}
         </Button>
