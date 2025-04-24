@@ -1,5 +1,7 @@
 // src/app/(marketing)/page.tsx
 
+"use client"; // <--- ADICIONE ESTA LINHA AQUI NO TOPO
+
 import dynamic from 'next/dynamic'; // 1. Importe 'dynamic'
 
 // --- Componentes que CARREGAM NORMALMENTE (Topo da página/Leves) ---
