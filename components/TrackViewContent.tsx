@@ -1,12 +1,12 @@
-// components/TrackViewContent.tsx
+// components/TrackViewContent.tsx (Com array de dependências vazio)
 'use client';
 import { useEffect } from 'react';
-import { sendCapiEvent } from '@/lib/pixel'; // Assume que esta função já está corretamente tipada
+import { sendCapiEvent } from '@/lib/pixel';
 
-// Declaração global do fbq (Idealmente movida, mas corrigida aqui)
+// Declaração global do fbq
 declare global {
   interface Window {
-    fbq?: (...args: unknown[]) => void; // <--- CORREÇÃO AQUI: Usa unknown[]
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -17,7 +17,6 @@ interface ViewContentParams {
   content_type?: string;
   value?: number;
   currency?: string;
-  // *** ADICIONADO: Assinatura de índice para compatibilidade ***
   [key: string]: string | number | boolean | string[] | undefined;
 }
 
@@ -28,40 +27,32 @@ interface TrackViewContentProps {
 
 const TrackViewContent: React.FC<TrackViewContentProps> = ({ eventData }) => {
   useEffect(() => {
-    // Timeout para dar tempo ao script do pixel carregar
     const timer = setTimeout(() => {
-      console.warn(`TRACK_VIEW_CONTENT (Prod Check): Attempting inside timeout. FBQ type: ${typeof window.fbq}`);
+      console.warn(`TRACK_VIEW_CONTENT (useEffect Check): Attempting inside timeout. FBQ type: ${typeof window.fbq}`);
+      console.warn('TRACK_VIEW_CONTENT (useEffect Check): Received eventData:', JSON.stringify(eventData));
 
       if (typeof window.fbq === 'function') {
-        // Verifica se eventData existe e tem propriedades
-        if (eventData && Object.keys(eventData).length > 0) {
-          console.warn('TRACK_VIEW_CONTENT (Prod Check): FBQ found, Data valid. Sending events.', eventData);
-
-          // --- PASSO 1: Dispara o Pixel do Navegador ---
-          // eventData (ViewContentParams com assinatura) é aceito por fbq
+        // Adicionada verificação explícita de objeto
+        if (eventData && typeof eventData === 'object' && Object.keys(eventData).length > 0) {
+          console.warn('TRACK_VIEW_CONTENT (useEffect Check): FBQ found, Data valid. Sending events.');
           window.fbq('track', 'ViewContent', eventData);
           console.log('Meta Pixel (Browser): ViewContent sent', eventData);
-
-          // --- PASSO 2: Dispara via CAPI ---
           const currentUrl = window.location.href;
-          // Assumindo que sendCapiEvent espera Record<string, unknown> ou similar
-          // A interface ViewContentParams com assinatura de índice é compatível.
           sendCapiEvent('ViewContent', eventData, currentUrl);
-
         } else {
-          console.warn('TRACK_VIEW_CONTENT (Prod Check): FBQ found, but EventData invalid/empty.', eventData);
+          console.warn('TRACK_VIEW_CONTENT (useEffect Check): FBQ found, but EventData invalid/empty.', eventData);
         }
       } else {
-        console.warn('TRACK_VIEW_CONTENT (Prod Check): FBQ function NOT found inside timeout.');
+        console.warn('TRACK_VIEW_CONTENT (useEffect Check): FBQ function NOT found inside timeout.');
       }
-    }, 750); // Delay para carregamento do script
+    }, 750);
 
-    // Limpeza do timeout
     return () => clearTimeout(timer);
 
-  }, [eventData]); // Dependência mantida
+  // }, [eventData]); // <<< Linha antiga comentada
+  }, []); // <<< ARRAY DE DEPENDÊNCIAS VAZIO: Executa apenas na montagem
 
-  return null; // Componente não renderiza UI
+  return null;
 };
 
 export default TrackViewContent;
