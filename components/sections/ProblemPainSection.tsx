@@ -99,7 +99,7 @@ export default function ProblemPainSection() {
           {/* Texto */}
           <AnimateOnScroll delay={0.1} className="flex flex-col gap-4">
             <p className="text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-7">
-              O banco oferece "ajuda",
+              O banco oferece &quot;ajuda&quot;,
               <span className="font-medium text-foreground"> mas empurra mais juros.</span>
               — criando um labirinto financeiro sem fim e sem saída.
             </p>

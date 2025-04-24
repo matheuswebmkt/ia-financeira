@@ -8,7 +8,6 @@ import ShineBorder from "@/components/magicui/shine-border"; // Mantido
 import { Check } from "lucide-react"; // Só importa Check
 // import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // Removido se não usado mais
 // import ShinyButton02 from "@/components/magicui/shiny-button-02"; // Removido
-import { SparklesText } from "@/components/magicui/sparkles-text"; // Mantido
 import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // Importa wrapper
 
 // REMOVIDO: Hook useIntersectionObserver daqui
@@ -47,7 +46,7 @@ export default function ProductContentSection() {
                 <div className="mx-auto flex max-w-3xl flex-col items-center space-y-4 text-center">
                     <AnimateOnScroll delay={0}>
                         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                            <SparklesText>Inteligência que</SparklesText> <span className="text-primary">vira o jogo.</span>
+                            Inteligência que <span className="text-primary">vira o jogo.</span>
                         </h2>
                     </AnimateOnScroll>
                     <AnimateOnScroll delay={0.1}>

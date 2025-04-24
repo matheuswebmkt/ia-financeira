@@ -6,11 +6,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ShineBorder from "@/components/magicui/shine-border";
 import {
-    Gift, ShieldCheck, FileText, DollarSign, RefreshCw, LucideIcon // Removido ArrowRight
+    ShieldCheck, FileText, DollarSign, RefreshCw, LucideIcon // Removido ArrowRight
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 // import ShinyButton02 from "@/components/magicui/shiny-button-02"; // Removido
-import { SparklesText } from "@/components/magicui/sparkles-text";
 import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // Importa wrapper
 
 // REMOVIDO: Hook useIntersectionObserver daqui
@@ -45,7 +44,7 @@ export default function BonusSection() {
                 <div className="mx-auto flex max-w-3xl flex-col items-center space-y-4 text-center">
                     <AnimateOnScroll delay={0}>
                         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                            Presentes que Potencializam sua <span className="text-primary"><SparklesText>Virada Financeira</SparklesText></span>
+                            Presentes que Potencializam sua <span className="text-primary">Virada Financeira</span>
                         </h2>
                     </AnimateOnScroll>
                     {/* Removi o parágrafo de descrição aqui, pois não havia um no código original */}

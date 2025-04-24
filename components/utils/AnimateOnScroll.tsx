@@ -1,79 +1,81 @@
 // components/utils/AnimateOnScroll.tsx
-"use client"; // ESSENCIAL: Este componente usa hooks
+"use client"; 
 
-import React, { useRef, useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
+import React, { useRef, useEffect, useState, ElementType, RefObject } from 'react'; // Importa RefObject
+import { cn } from "@/lib/utils";
 
-// Hook interno (ou importe se já o tiver em outro lugar)
-function useIntersectionObserver(options: IntersectionObserverInit = {}): [React.RefObject<any>, boolean] {
+// Hook interno com tipagem de retorno corrigida
+// Agora retorna RefObject<HTMLElement | null>
+function useIntersectionObserver(options: IntersectionObserverInit = {}): [RefObject<HTMLElement | null>, boolean] { // <--- CORREÇÃO AQUI
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const ref = useRef<any>(null);
+  // useRef tipado como HTMLElement, inicializado com null
+  const ref = useRef<HTMLElement>(null); 
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    const element = ref.current; // element é HTMLElement | null
+    if (!element) return; // Sai se for null
 
-    const observer = new IntersectionObserver(([entry]) => {
-      // Atualiza o estado APENAS quando muda para intersecting=true
-      if (entry.isIntersecting && !isIntersecting) { // Adicionado '!isIntersecting' para evitar re-renders desnecessários se já estiver visível
+    const observer = new IntersectionObserver(([entry]: IntersectionObserverEntry[]) => {
+      // Verifica se está intersectando E se o estado ainda não é true
+      if (entry.isIntersecting && !isIntersecting) { 
         setIsIntersecting(true);
-        // Desconecta após a primeira vez para animação 'once'
         observer.unobserve(element); 
       }
-      // Não faz nada se sair da view ou já estiver visível
     }, {
-      threshold: 0.1, // Default threshold, pode ser sobrescrito via props
-      ...options,
+      threshold: options.threshold ?? 0.1, 
+      rootMargin: options.rootMargin,
+      root: options.root,
     });
 
     observer.observe(element);
 
-    // Cleanup
+    // Cleanup usa a mesma variável 'element'
     return () => {
       if (element) {
         observer.unobserve(element);
       }
     };
+  // Dependências explícitas
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options.root, options.rootMargin, options.threshold]); // Dependências mais explícitas
+  }, [options.root, options.rootMargin, options.threshold, isIntersecting]); // Adiciona isIntersecting aqui para evitar re-checar se já é true
 
+  // Retorna a ref (que pode ser null) e o estado
   return [ref, isIntersecting];
 }
 
 
-// Props do componente
+// Props do componente (sem mudanças aqui)
 interface AnimateOnScrollProps {
   children: React.ReactNode;
-  className?: string; // Para classes adicionais no wrapper
-  delay?: number;     // Delay em segundos (ex: 0.1, 0.2)
-  threshold?: number; // Threshold do observer (0 a 1)
-  rootMargin?: string; // Root margin do observer
-  as?: React.ElementType; // Tag HTML a ser usada (default: div)
-  disabled?: boolean; // Para desabilitar a animação se necessário
+  className?: string;
+  delay?: number;
+  threshold?: number;
+  rootMargin?: string;
+  as?: ElementType; // ElementType é mais flexível que React.ElementType
+  disabled?: boolean;
 }
 
 const AnimateOnScroll: React.FC<AnimateOnScrollProps> = ({
   children,
   className,
-  delay = 0, // Default sem delay
+  delay = 0,
   threshold = 0.1,
   rootMargin,
-  as: Tag = 'div', // Usa 'div' como padrão
+  as: Tag = 'div',
   disabled = false,
 }) => {
   const observerOptions = { threshold, rootMargin };
+  // Recebe a ref como RefObject<HTMLElement | null>
   const [ref, isVisible] = useIntersectionObserver(observerOptions);
 
-  // Calcula o estilo de delay apenas se houver delay e não estiver desabilitado
   const style = (!disabled && delay > 0) ? { transitionDelay: `${delay}s` } : undefined;
-
-  // Define as classes de animação
   const animationClasses = !disabled ? cn("animate-on-scroll", isVisible && "is-visible") : "";
 
+  // O tipo RefObject<HTMLElement | null> é compatível com a prop 'ref' de tags HTML
   return (
     <Tag
       ref={ref}
-      className={cn(animationClasses, className)} // Combina classes de animação com as passadas
+      className={cn(animationClasses, className)}
       style={style}
     >
       {children}

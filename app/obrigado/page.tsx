@@ -1,55 +1,16 @@
-// app/marketing/obrigado/page.tsx
 'use client';
 
-import React, { Suspense, useEffect, useRef, useState } from 'react'; // Hooks React adicionados
-import TrackPurchase from '@/components/TrackPurchase'; // Mantido
-// Framer Motion REMOVIDO
-import { CheckCircle } from 'lucide-react'; // Mantido
-import { cn } from '@/lib/utils'; // Mantido
-import { SparklesText } from "@/components/magicui/sparkles-text"; // Mantido
+import React, { Suspense, useEffect, useRef, useState } from 'react';
+import TrackPurchase from '@/components/TrackPurchase';
+import { CheckCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { SparklesText } from "@/components/magicui/sparkles-text";
+import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // << IMPORTANTE: Usaremos este!
 
-// Hook customizado para Intersection Observer (importar ou definir aqui)
-function useIntersectionObserver(options: IntersectionObserverInit = {}): [React.RefObject<any>, boolean] {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const ref = useRef<any>(null);
+// REMOVIDO: Hook useIntersectionObserver daqui
 
-  // Como esta é uma página inteira, podemos querer que a animação comece quase imediatamente
-  // Usando threshold baixo e talvez observando um elemento que aparece rápido.
-  // Ou, podemos simplificar e apenas usar um delay pequeno sem observer se a página for simples.
-  // Para consistência, manteremos o observer, mas ele ativará muito rapidamente.
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsIntersecting(true);
-        observer.unobserve(element);
-      }
-    }, {
-      threshold: 0.01, // Trigger bem cedo
-      ...options,
-    });
-
-    observer.observe(element);
-
-    return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
-    };
-  }, [options]);
-
-  return [ref, isIntersecting];
-}
-
-
-// --- Declaração global do fbq (Mantida) ---
-declare global {
-  interface Window {
-    fbq?: (...args: any[]) => void;
-  }
-}
+// REMOVIDO: Declaração global do fbq daqui (deve estar em um arquivo de tipos global ou gerenciado pelo MetaPixelEvents/Pixel Lib)
+// Se precisar MUITO dela aqui, pode manter, mas idealmente não é o melhor lugar.
 
 // --- Dados ESTÁTICOS do produto (Mantidos) ---
 const purchasedProductInfo = {
@@ -57,106 +18,75 @@ const purchasedProductInfo = {
   content_name: 'eBook IA Anti-Dívidas + Bônus',
   content_type: 'product',
   num_items: 1,
+  // Adicione value e currency se TrackPurchase precisar deles
+  // value: 9.90,
+  // currency: 'BRL',
 };
 
 // --- Componente Wrapper (Mantido) ---
+// Suspense é importante aqui caso TrackPurchase faça algo assíncrono
 function PurchaseTracker() {
-  return <TrackPurchase productData={purchasedProductInfo} />;
+  return (
+    <Suspense fallback={<div>Rastreando compra...</div>}> {/* Adiciona um fallback para o Suspense */}
+      <TrackPurchase productData={purchasedProductInfo} />
+    </Suspense>
+  );
 }
 
-// --- Animation Variants --- REMOVIDAS
-
-// --- Componente Principal Otimizado ---
+// --- Componente Principal Otimizado (usando AnimateOnScroll) ---
 export default function ThankYouPage() {
-
-    // Hook de observação para o container principal dos elementos animados
-    const [contentRef, isContentVisible] = useIntersectionObserver();
-
-    const calculateDelay = (index: number, baseDelay = 0.1) => `${index * baseDelay}s`;
+  // REMOVIDO: Lógica de animação com observer/state/calculateDelay
 
   return (
-    // Seção principal - removido motion e props
     <section
       id="obrigado"
-      // light-sweep MANTIDO
-      className="w-full min-h-screen flex items-center justify-center py-16 md:py-20 lg:py-24 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 dark:from-green-950/30 dark:via-gray-950 dark:to-purple-950/30 relative overflow-hidden light-sweep light-mode-sweep"
-      // variants, initial, animate REMOVIDOS
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 py-16 dark:from-green-950/30 dark:via-gray-950 dark:to-purple-950/30 md:py-20 lg:py-24 light-sweep light-mode-sweep"
     >
-        {/* Background com brilhos - Mantido */}
+        {/* Background */}
        <div className="absolute inset-0 z-[-1] opacity-15 dark:opacity-[0.1]">
-         <div className="absolute top-[-5%] left-[5%] w-1/3 h-1/2 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.2),_transparent_70%)] pointer-events-none blur-3xl transform-gpu opacity-60 rotate-12" />
-         <div className="absolute bottom-[-5%] right-[5%] w-1/3 h-1/2 bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent)/0.3),_transparent_80%)] pointer-events-none blur-3xl transform-gpu opacity-50 -rotate-12" />
-         <div className="absolute top-[30%] right-[15%] w-1/4 h-1/4 bg-[radial-gradient(ellipse_at_center,_#22c55e60,_transparent_70%)] pointer-events-none blur-2xl transform-gpu opacity-40" />
+         <div className="pointer-events-none absolute top-[-5%] left-[5%] h-1/2 w-1/3 rotate-12 transform-gpu rounded-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.2),_transparent_70%)] blur-3xl opacity-60" />
+         <div className="pointer-events-none absolute bottom-[-5%] right-[5%] h-1/2 w-1/3 -rotate-12 transform-gpu rounded-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent)/0.3),_transparent_80%)] blur-3xl opacity-50" />
+         <div className="pointer-events-none absolute top-[30%] right-[15%] h-1/4 w-1/4 transform-gpu rounded-full bg-[radial-gradient(ellipse_at_center,_#22c55e60,_transparent_70%)] blur-2xl opacity-40" />
        </div>
 
-      {/* Container principal - removido motion e props */}
-      {/* z-[2] MANTIDO */}
-      <div
-        ref={contentRef} // Adiciona ref aqui para observar quando o conteúdo entra (rapidamente)
-        className="container px-5 relative z-[2]"
-        // variants REMOVIDO
-      >
+      {/* Container principal */}
+      {/* z-[2] Mantido, ref removido */}
+      <div className="container relative z-[2] px-5">
          {/* Wrapper Centralizado */}
         <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
 
-            {/* Suspense e Tracker - Mantidos */}
-            <Suspense fallback={null}>
-              <PurchaseTracker />
-            </Suspense>
+            {/* Tracker - Renderiza imediatamente */}
+            <PurchaseTracker />
 
-            {/* Ícone (Animado) */}
-             <div
-                className={cn(
-                    "mb-[-1rem]", // Margem mantida
-                    "animate-on-scroll", isContentVisible && "is-visible" // Animação controlada pelo container
-                )}
-                style={{ transitionDelay: calculateDelay(0) }} // Primeiro item a animar
-                // variants REMOVIDO
-              >
-                <div className="p-2 bg-green-100 dark:bg-green-900 rounded-full border border-green-200 dark:border-green-700 shadow-md inline-block">
+            {/* Ícone (Animado com AnimateOnScroll) */}
+             <AnimateOnScroll delay={0.1} className="mb-[-1rem]"> {/* Delay pequeno */}
+                <div className="inline-block rounded-full border border-green-200 bg-green-100 p-2 shadow-md dark:border-green-700 dark:bg-green-900">
                     <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-500" />
                 </div>
-             </div>
+             </AnimateOnScroll>
 
-            {/* Título Principal com SparklesText (Animado) */}
-            <h2
-                className={cn(
-                  "text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl",
-                  "animate-on-scroll", isContentVisible && "is-visible"
-                )}
-                style={{ transitionDelay: calculateDelay(1) }} // Stagger
-                // variants REMOVIDO
-            >
-                {/* SparklesText Mantido */}
-                <SparklesText>Compra Confirmada!🎉</SparklesText>
-            </h2>
+            {/* Título Principal (Animado) */}
+            <AnimateOnScroll delay={0.2}>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
+                    <SparklesText>Compra Confirmada!🎉</SparklesText>
+                </h2>
+            </AnimateOnScroll>
 
             {/* Parágrafo de Confirmação (Animado) */}
-            <p
-                className={cn(
-                  "text-base leading-relaxed text-muted-foreground sm:text-lg",
-                   "animate-on-scroll", isContentVisible && "is-visible"
-                )}
-                style={{ transitionDelay: calculateDelay(2) }} // Stagger
-                // variants REMOVIDO
-            >
-                Obrigado por adquirir o <span className="font-semibold text-foreground">{purchasedProductInfo.content_name}</span>! Seu acesso está a caminho.
-            </p>
+            <AnimateOnScroll delay={0.3}>
+                <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    Obrigado por adquirir o <span className="font-semibold text-foreground">{purchasedProductInfo.content_name}</span>! Seu acesso está a caminho.
+                </p>
+            </AnimateOnScroll>
 
             {/* Parágrafo de Instrução (Animado) */}
-            <p
-                className={cn(
-                  "text-base leading-relaxed text-muted-foreground",
-                  "animate-on-scroll", isContentVisible && "is-visible"
-                )}
-                style={{ transitionDelay: calculateDelay(3) }} // Stagger
-                // variants REMOVIDO
-            >
-                Enviamos um e-mail com todos os detalhes para você começar. Por favor, verifique sua caixa de entrada (e a pasta de spam, por via das dúvidas 😉).
-            </p>
+            <AnimateOnScroll delay={0.4}>
+                <p className="text-base leading-relaxed text-muted-foreground">
+                    Enviamos um e-mail com todos os detalhes para você começar. Por favor, verifique sua caixa de entrada (e a pasta de spam, por via das dúvidas 😉).
+                </p>
+            </AnimateOnScroll>
 
-             {/* Opcional: Link/Botão sutil (Mantido comentado) */}
-             {/* ... */}
+             {/* Opcional: Link/Botão sutil (Removido) */}
 
         </div>
       </div>
