@@ -4,7 +4,6 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import TrackPurchase from '@/components/TrackPurchase';
 import { CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SparklesText } from "@/components/magicui/sparkles-text";
 import AnimateOnScroll from '@/components/utils/AnimateOnScroll'; // << IMPORTANTE: Usaremos este!
 
 // REMOVIDO: Hook useIntersectionObserver daqui
@@ -68,7 +67,7 @@ export default function ThankYouPage() {
             {/* Título Principal (Animado) */}
             <AnimateOnScroll delay={0.2}>
                 <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
-                    <SparklesText>Compra Confirmada!🎉</SparklesText>
+                    Compra Confirmada!🎉
                 </h2>
             </AnimateOnScroll>
 
