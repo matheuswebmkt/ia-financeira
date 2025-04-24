@@ -1,12 +1,12 @@
 // components/navbar/navbar.tsx
 
-"use client"; // <<< ADICIONADO: Necessário para o onClick com lógica client-side
+"use client"; 
 
-import React from 'react'; // Importa React
-import { Button } from "@/components/ui/button"; // Importa o Button padrão
+import React from 'react'; 
+import { Button } from "@/components/ui/button"; 
 import { Logo } from "./logo";
-import ThemeToggle from "../theme-toggle"; // Assume que este já é client ou não precisa ser
-import { sendCapiEvent } from '@/lib/pixel'; // Importa função CAPI
+import ThemeToggle from "../theme-toggle"; 
+import { sendCapiEvent } from '@/lib/pixel'; 
 
 // Declaração global fbq
 declare global {
@@ -18,7 +18,8 @@ declare global {
 const Navbar = () => {
 
   // Função de clique para o botão "Get Started"
-  const handleGetStartedClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  // REMOVIDO o parâmetro 'event' pois não é utilizado
+  const handleGetStartedClick = (/* event: React.MouseEvent<HTMLButtonElement> */) => { 
     console.log('Navbar Get Started clicked!');
 
     // Dados do evento (AJUSTE CONFORME NECESSÁRIO!)
@@ -61,17 +62,15 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <ThemeToggle />
 
-          {/* Botão "Get Started" usando o componente Button e o handler */}
-          {/* Removido 'hidden xs:inline-flex' para sempre mostrar, ajuste se necessário */}
           <Button
-            variant="default" // Usa o estilo preto/branco
-            size="sm" // Tamanho sm pode ficar melhor na navbar, ajuste se preferir 'default'
-            onClick={handleGetStartedClick} // Adiciona a lógica de clique aqui
+            variant="default" 
+            size="sm" 
+            onClick={handleGetStartedClick} // Chama o handler corrigido
           >
             Get Started
           </Button>
 
-          {/* Mobile Menu Placeholder (se precisar implementar) */}
+          {/* Mobile Menu Placeholder */}
           {/* <div className="md:hidden"> ... </div> */}
         </div>
       </div>
