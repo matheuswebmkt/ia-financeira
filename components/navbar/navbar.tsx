@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import NavbarGetStartedButton from "./NavbarGetStartedButton";
 import { Logo } from "./logo";
 import ThemeToggle from "../theme-toggle";
 
@@ -13,7 +14,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           
-          <Button className="hidden xs:inline-flex">Clique aqui</Button>
+          <NavbarGetStartedButton className="hidden xs:inline-flex">Clique aqui</NavbarGetStartedButton>
 
           {/* Mobile Menu */}
           <div className="md:hidden">

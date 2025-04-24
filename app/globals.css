@@ -201,3 +201,29 @@
 .image-shine-border:hover .image-inside {
   transform: scale(1.05);
 }
+
+
+/* Definição da animação shine-pulse para o ShineBorder */
+@keyframes shine-pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
+}
+
+/* Classe utilitária para o tamanho do background da animação */
+.bg-shine-size {
+   background-size: 300% 300%; /* Ou o tamanho definido no componente se for diferente */
+}
+
+/* (Opcional, mas bom ter) Garante que a animação não rode se o usuário prefere movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe\:before\:animate-\[shine-pulse_var\(--shine-pulse-duration\)_infinite_linear\]::before {
+    animation: none !important;
+  }
+}

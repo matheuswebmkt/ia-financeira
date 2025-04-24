@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -76,7 +75,6 @@ const Footer = () => {
             <h6 className="font-semibold">Stay up to date</h6>
             <form className="mt-6 flex items-center gap-2">
               <Input type="email" placeholder="Enter your email" />
-              <Button>Subscribe</Button>
             </form>
           </div>
         </div>

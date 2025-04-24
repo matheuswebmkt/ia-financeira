@@ -23,6 +23,26 @@ const DynamicParadigmShiftSection = dynamic(
   () => import('@/components/sections/ParadigmShiftSection'),
   { loading: () => <LoadingPlaceholder /> }
 );
+const DynamicMethodIntroductionSection = dynamic(
+  () => import('@/components/sections/MethodIntroductionSection'),
+  { loading: () => <LoadingPlaceholder /> }
+);
+const DynamicCtaSection01 = dynamic(
+  () => import('@/components/sections/CtaSection01'),
+  { loading: () => <LoadingPlaceholder /> }
+);
+const DynamicCtaSection02 = dynamic(
+  () => import('@/components/sections/CtaSection02'),
+  { loading: () => <LoadingPlaceholder /> }
+);
+const DynamicCtaSection03 = dynamic(
+  () => import('@/components/sections/CtaSection03'),
+  { loading: () => <LoadingPlaceholder /> }
+);
+const DynamicCtaSection04 = dynamic(
+  () => import('@/components/sections/CtaSection04'),
+  { loading: () => <LoadingPlaceholder /> }
+);
 const DynamicTextReveal03 = dynamic(
   () => import('@/components/sections/TextReveal03'),
   { loading: () => <LoadingPlaceholder /> }
@@ -67,6 +87,10 @@ const DynamicFinalCtaSection = dynamic(
   () => import('@/components/sections/FinalCtaSection'),
   { loading: () => <LoadingPlaceholder /> }
 );
+const DynamicFooter = dynamic(
+  () => import('@/components/sections/FooterSection'),
+  { loading: () => <LoadingPlaceholder /> }
+);
 
 // --- Componente Principal ---
 export default function Home() {
@@ -80,17 +104,24 @@ export default function Home() {
         <DynamicTextReveal01 />
         <DynamicProblemPainSection />
         <DynamicParadigmShiftSection />
+        <DynamicMethodIntroductionSection />
+        <DynamicCtaSection01 />
         <DynamicTextReveal03 />
         <DynamicBenefitsSection />
+        <DynamicCtaSection02 />
         <DynamicProductContentSection />
         <DynamicTextReveal04 />
         <DynamicSocialProofSection />
+        <DynamicCtaSection03 />
         <DynamicTextRevealBonus02 />
         <DynamicBonusSection />
+        <DynamicCtaSection04 />
         <DynamicPricingSection />
         <DynamicGuaranteeSection />
         <DynamicFaqSection /> {/* Adicionado o FAQ que faltava */}
         <DynamicFinalCtaSection />
+        <DynamicFooter />
+        
 
       </main>
     </>
