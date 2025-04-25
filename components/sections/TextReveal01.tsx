@@ -7,7 +7,7 @@ export default function TesteRevealPage() {
       
 
       <TextRevealOnly>
-      Pare de utilizar ferramentas do século passado contra um sistema de endividamento feito pra te deixar paralisado. 
+      Pare de utilizar ferramentas do século passado contra um sistema de endividamento feito pra deixar sua vida paralisada. 
       </TextRevealOnly>
 
       

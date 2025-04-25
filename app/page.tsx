@@ -104,9 +104,9 @@ export default function Home() {
         <DynamicTextReveal01 />
         <DynamicProblemPainSection />
         <DynamicParadigmShiftSection />
+        <DynamicTextReveal03 />
         <DynamicMethodIntroductionSection />
         <DynamicCtaSection01 />
-        <DynamicTextReveal03 />
         <DynamicBenefitsSection />
         <DynamicCtaSection02 />
         <DynamicProductContentSection />

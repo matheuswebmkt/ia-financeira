@@ -18,9 +18,9 @@ interface Pilar {
     icon: LucideIcon;
 }
 const pilares: Pilar[] = [
-    { text: "Uma pancada de realidade", icon: Zap },
-    { text: "Plano estratégico com IA", icon: Target },
-    { text: "Reprogramação de mentalidade", icon: Brain },
+    { text: "Começa em minutos", icon: Zap },
+    { text: "Plano estratégico personalizado", icon: Target },
+    { text: "Inteligência financeira real", icon: Brain },
 ];
 
 // --- Componente Refatorado (Server Component) ---
@@ -40,7 +40,7 @@ export default function MethodIntroductionSection() {
                     <AnimateOnScroll delay={0}>
                         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
                              {/* Mantém SparklesText se desejado */}
-                            IA: SEU ALIADO Nº 1
+                            IA Anti-dívidas: SEU ALIADO Nº 1
                         </h2>
                     </AnimateOnScroll>
                     <AnimateOnScroll delay={0.1}>
@@ -86,13 +86,13 @@ export default function MethodIntroductionSection() {
                     {/* Coluna Direita: Texto */}
                     <AnimateOnScroll delay={0.1} className="flex flex-col gap-4">
                         <p className="text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-7">
-                            O <span className="font-medium text-foreground">Método IA Anti-dívidas</span> usa o poder da inteligência artificial, de forma simples e gratuita, para criar saídas personalizadas pra sua vida financeira.
+                            <span className="font-medium text-foreground">Script pronto. Resultados Reais. Sem tempo perdido.</span>
                         </p>
                         <p className="text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-7">
-                            Você transforma a IA em um <span className="font-medium text-foreground">consultor financeiro pessoal</span> — sem pagar um centavo. Sem achismos, sem fórmulas mágicas.
+                        Imagine abrir o celular, colar um comando pronto, e receber um <span className="font-medium text-foreground">plano financeiro inteligente</span>, personalizado e pronto pra te <span className="font-medium text-foreground">tirar do vermelho</span> ou resolver alguma situação complicada...
                         </p>
                         <p className="text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-7">
-                            Uma tecnologia que escuta, entende e responde só a você. E o melhor: disponível agora, sem mensalidade, sem complicação. <span className="font-medium text-foreground">(Tá tudo pronto!)</span>
+                        Agora pare de imaginar. A IA faz isso. E faz em minutos. Uma tecnologia que escuta, entende e responde só a você. <span className="font-medium text-foreground">(Tá tudo pronto!)</span>
                         </p>
                     </AnimateOnScroll>
                 </div>
@@ -101,7 +101,7 @@ export default function MethodIntroductionSection() {
                 <div className="mx-auto max-w-5xl space-y-6 text-center">
                     <AnimateOnScroll delay={0}>
                         <h3 className="text-xl font-semibold text-foreground">
-                            É um dispositivo de libertação em forma de conteúdo:
+                            É uma ferramenta de libertação financeira:
                         </h3>
                     </AnimateOnScroll>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
