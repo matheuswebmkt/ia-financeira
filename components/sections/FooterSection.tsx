@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link"; // Para links
 import { InstagramIcon } from "lucide-react"; // Importa só o ícone do Instagram
-import { Button } from "@/components/ui/button"; // Para o botão Voltar ao Topo
 
 const Footer = () => {
   return (

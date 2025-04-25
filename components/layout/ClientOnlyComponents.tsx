@@ -11,16 +11,14 @@ const Placeholder = () => <div className="h-10 w-full" />;
 const DynamicOnlineUsersBox = dynamic(
   () => import('@/components/ui/online-users-box'),
   { 
-    ssr: false, // OK aqui dentro de um Client Component
-    // loading: () => <Placeholder /> 
+    ssr: false, 
   } 
 );
 
 const DynamicPurchaseNotification = dynamic(
   () => import('@/components/ui/purchase-notification'),
   { 
-    ssr: false, // OK aqui dentro de um Client Component
-    // loading: () => <Placeholder /> 
+    ssr: false, 
   }
 );
 

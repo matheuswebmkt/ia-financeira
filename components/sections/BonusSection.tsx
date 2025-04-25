@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ShineBorder from "@/components/magicui/shine-border";
 import {
-    ShieldCheck, FileText, DollarSign, RefreshCw, LucideIcon // Mantém RefreshCw
+    ShieldCheck, FileText, DollarSign, LucideIcon // Mantém RefreshCw
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 // import { SparklesText } from "@/components/magicui/sparkles-text"; // Removido - não usado no H2

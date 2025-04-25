@@ -1,6 +1,5 @@
 // components/frontpage/hero.tsx 
 
-import { Badge } from "@/components/ui/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
 import HeroButtonClient from "@/components/frontpage/HeroButtonClient"; 
