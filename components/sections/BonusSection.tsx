@@ -99,22 +99,6 @@ export default function BonusSection() {
                         ))}
                     </div>
                 </div>
-
-                {/* Bloco Pós-Cards - Ícone RefreshCw ADICIONADO */}
-                <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 pt-6 text-center md:pt-8">
-                    <AnimateOnScroll delay={0}>
-                        <h4 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-                             {/* --- ÍCONE ADICIONADO AQUI --- */}
-                            <RefreshCw className="h-5 w-5 animate-spin text-primary [animation-duration:3s]" aria-hidden="true"/>
-                            + Acesso Vitalício às Atualizações <span aria-label="Rosto chocado" role="img">😱</span>
-                        </h4>
-                    </AnimateOnScroll>
-                    <AnimateOnScroll delay={0.1}>
-                        <p className="text-balance text-base leading-relaxed text-muted-foreground"> {/* Adicionado text-balance */}
-                           Esses bônus, sozinhos, já valem mais que o preço do método completo. E você leva <span className="font-semibold text-foreground">TUDO</span> isso hoje.
-                        </p>
-                    </AnimateOnScroll>
-                </div>
             </div>
         </section>
     );

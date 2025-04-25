@@ -11,7 +11,7 @@ export const Logo = () => {
       // Use text-foreground para que a cor se adapte ao tema
       // Ajuste o tamanho/peso da fonte conforme seu design
       className={cn(
-        "text-xl font-bold text-foreground hover:text-foreground/80 transition-colors duration-200", // Exemplo de estilo
+        "text-x2 font-bold text-foreground hover:text-foreground/80 transition-colors duration-200", // Exemplo de estilo
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background rounded-sm" // Estilos de foco para acessibilidade
       )}
       aria-label="Página Inicial IA Financeira" // Melhora acessibilidade

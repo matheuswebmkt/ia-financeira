@@ -1,41 +1,53 @@
 // components/frontpage/hero.tsx 
-// (Pode continuar como Server Component - sem "use client")
 
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import React from "react";
-import HeroButtonClient from "@/components/frontpage/HeroButtonClient"; // Importa o componente do botão
+import { cn } from "@/lib/utils";
+import HeroButtonClient from "@/components/frontpage/HeroButtonClient"; 
 
-export default function HeroSection() {
+const Hero = () => {
   return (
-    <section
-      className="relative flex min-h-screen w-full flex-col overflow-hidden pb-20 pt-12 md:pb-32 md:pt-24"
-    >
-      {/* Container central - ADICIONADO mx-auto */}
-      <div className={cn(
-        "container flex max-w-[64rem] flex-col items-center gap-4 px-5 text-center",
-        "mx-auto" // <<< ADICIONE ESTA CLASSE AQUI
-      )}>
-        {/* Tagline */}
-        <div>
-          <div className="relative inline-block overflow-hidden rounded-full border border-border/20 bg-muted/90 px-5 py-2 text-sm font-medium shadow-sm light-sweep">
-            Adeus dívidas. Olá liberdade.
+    <div className="flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-6 py-20">
+      {/* Container do conteúdo */}
+      <div>
+        {/* ESTE É O CONTAINER PAI DO H1 */}
+        {/* A classe max-w-2xl aqui está limitando TUDO dentro dele, incluindo o h1 */}
+        <div className="mx-auto max-w-5xl text-center"> 
+          {/* Badge */}
+          <div className="mb-6"> 
+            <div className="relative inline-block overflow-hidden rounded-full border border-border/20 bg-muted/90 px-5 py-2 text-sm font-medium shadow-sm light-sweep">
+              Adeus dívidas. Olá liberdade. 🚀
+            </div>
           </div>
-        </div>
 
-        {/* Headline principal */}
-        <h1 className="text-balance text-left text-[2rem] font-bold leading-[1.2] tracking-tight text-foreground sm:text-center sm:text-4xl md:text-5xl lg:text-6xl">
-          O fim das dívidas começa AGORA, com a IA fazendo por você.
-        </h1>
+          {/* Título */}
+          {/* Removendo max-w daqui, pois o pai controla */}
+          <h1 className={cn(
+              "mt-6 text-balance text-3xl font-bold !leading-[1.2] tracking-tight", 
+              "xs:text-4xl sm:text-5xl md:text-6xl",
+              // "max-w-[20ch] mx-auto", // << REMOVIDO daqui
+              // "md:max-w-none" // << REMOVIDO daqui
+          )}>
+            O fim das dívidas começa AGORA, com a IA fazendo por você.
+          </h1>
 
-        {/* Subheadline */}
-        <p className="max-w-[42rem] text-balance text-left text-base leading-relaxed text-muted-foreground sm:text-center sm:text-xl sm:leading-8">
-          Use a inteligência artificial pra sair do vermelho com um plano de ação que funciona até mesmo no seu pior dia do mês.
-        </p>
+          {/* Parágrafo */}
+           {/* Removendo max-w daqui também, se quiser que o pai controle */}
+          <p className={cn(
+            "mt-6 text-balance xs:text-lg",
+            "max-w-[60ch] mx-auto" // Pode manter ou remover dependendo do design
+          )}>
+            A inteligência artificial tira você do vermelho com um plano de ação que funciona até mesmo no seu pior dia do mês.
+          </p>
 
-        {/* Renderiza o componente Client que contém o botão */}
-        <HeroButtonClient />
-
+          {/* Botão */}
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <HeroButtonClient />
+          </div>
+        </div> {/* Fim do div com max-w-2xl */}
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default Hero;

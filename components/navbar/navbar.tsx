@@ -67,7 +67,7 @@ const Navbar = () => {
             size="sm" 
             onClick={handleGetStartedClick} // Chama o handler corrigido
           >
-            Get Started
+            Clique aqui
           </Button>
 
           {/* Mobile Menu Placeholder */}
