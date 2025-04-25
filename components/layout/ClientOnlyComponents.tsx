@@ -4,8 +4,7 @@
 import dynamic from 'next/dynamic';
 import React from 'react'; // Importa React
 
-// Placeholder opcional
-const Placeholder = () => <div className="h-10 w-full" />; 
+
 
 // Carrega dinamicamente OS DOIS componentes AQUI DENTRO
 const DynamicOnlineUsersBox = dynamic(

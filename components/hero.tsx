@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
 import React from "react";
-import { cn } from "@/lib/utils"; // Importa cn se precisar para outras classes
 
 const Hero = () => {
   return (
