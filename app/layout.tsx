@@ -68,6 +68,7 @@ export default function RootLayout({
           
 
           {/* Scripts e Ferramentas de Análise */}
+          <script defer async id="intentyon-script" src="https://intentyon.com/t.js" data-project-id="cmc6k0w5y002lx87p89d9ng1v"></script>
           <SpeedInsights />
           <Analytics />
           <MetaPixelEvents />
@@ -96,7 +97,7 @@ export default function RootLayout({
           {/* <SiteFooter /> */}
 
         </ThemeProvider>
-        <script defer async id="intentyon-script" src="https://intentyon.com/t.js" data-project-id="cmc6k0w5y002lx87p89d9ng1v"></script>
+        
       </body>
     </html>
   );
