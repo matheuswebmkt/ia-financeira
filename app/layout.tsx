@@ -97,7 +97,7 @@ export default function RootLayout({
 
         </ThemeProvider>
         <script defer async id="intentyon-script" 
-        src="https://SUA-URL-DO-NGROK.ngrok-free.app/intentyon.js" 
+        src="https://4f9e-138-121-58-189.ngrok-free.app/intentyon.js" 
         data-project-id="cmc6k0w5y002lx87p89d9ng1v"></script>
       </body>
     </html>
