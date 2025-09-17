@@ -1,4 +1,4 @@
-// app/layout.tsx
+// app/layout.tsx 
 
 // Imports existentes...
 import { MainNav } from "@/components/main-nav";
@@ -35,7 +35,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children, // Recebe children
 }: {
@@ -46,35 +45,35 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={cn(fontSans.variable)} suppressHydrationWarning>
       <head>
-          {/* Scripts que precisam estar no head podem ir aqui se necessário */}
-          {/* O script base do Pixel geralmente vai no body, como você fez */}
+        {/* Scripts que precisam estar no head podem ir aqui se necessário */}
+        <script 
+          defer 
+          async 
+          id="intentyon-script" 
+          src="https://intentyon.com/t.js" 
+          data-project-id="cmfobmf720001etk4ddv1bwr2"
+        ></script>
       </head>
       <body
         className={cn(
-          // Mantenha suas classes do body
           "min-h-screen bg-background font-sans antialiased"
         )}
       >
-        {/* Providers devem envolver os children */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark" // Ou "system" se preferir
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {/* Conteúdo Principal da Aplicação */}
           {children}
 
-          
-
-          {/* Scripts e Ferramentas de Análise */}
           <SpeedInsights />
           <Analytics />
           <MetaPixelEvents />
           {pixelId && (
             <Script
               id="fb-pixel-base"
-              strategy="afterInteractive" // Boa estratégia para o pixel
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   !function(f,b,e,v,n,t,s)
@@ -92,13 +91,15 @@ export default function RootLayout({
             />
           )}
 
-          {/* REMOVA O SiteFooter daqui se ele já está sendo renderizado no MarketingLayout */}
           {/* <SiteFooter /> */}
-
         </ThemeProvider>
-        <script defer async id="intentyon-script" 
-        src="https://cc5e-138-121-58-189.ngrok-free.app/intentyon.js" 
-        data-project-id="cmc6k0w5y002lx87p89d9ng1v"></script>
+        <script 
+          defer 
+          async 
+          id="intentyon-script" 
+          src="https://cc5e-138-121-58-189.ngrok-free.app/intentyon.js" 
+          data-project-id="cmc6k0w5y002lx87p89d9ng1v">
+        </script>
       </body>
     </html>
   );
